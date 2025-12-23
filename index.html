@@ -1,34 +1,679 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Thiệp mời CLB Tennis</title>
-  <link rel="stylesheet" href="style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vật Lý 12 - Thí Nghiệm Tương Tác</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 20px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #667eea;
+        }
+
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            padding: 0 20px;
+        }
+
+        .hero-content h1 {
+            font-size: 56px;
+            margin-bottom: 20px;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero-content p {
+            font-size: 24px;
+            margin-bottom: 30px;
+            animation: fadeInUp 1s ease 0.2s backwards;
+        }
+
+        .cta-button {
+            padding: 15px 40px;
+            background: white;
+            color: #667eea;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 18px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: inline-block;
+            animation: fadeInUp 1s ease 0.4s backwards;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .section {
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 42px;
+            margin-bottom: 50px;
+            color: white;
+        }
+
+        .topics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .topic-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .topic-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
+        }
+
+        .topic-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .topic-card h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: #667eea;
+        }
+
+        .topic-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .experiments {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            margin-top: 40px;
+        }
+
+        .experiment-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .experiment-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .experiment-canvas {
+            width: 100%;
+            height: 300px;
+            background: #f0f4ff;
+            border-bottom: 2px solid #667eea;
+            display: block;
+        }
+
+        .experiment-controls {
+            padding: 20px;
+        }
+
+        .experiment-controls h4 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .control-group {
+            margin-bottom: 15px;
+        }
+
+        .control-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #666;
+            font-size: 14px;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            height: 6px;
+            border-radius: 5px;
+            background: #ddd;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #667eea;
+            cursor: pointer;
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #667eea;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-control {
+            padding: 10px 20px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background 0.3s;
+            margin-right: 10px;
+            margin-top: 10px;
+        }
+
+        .btn-control:hover {
+            background: #5568d3;
+        }
+
+        .value-display {
+            display: inline-block;
+            margin-left: 10px;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        footer {
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            padding: 30px 20px;
+            text-align: center;
+            color: white;
+            margin-top: 60px;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 36px;
+            }
+
+            .hero-content p {
+                font-size: 18px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .experiment-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <header class="hero">
-      <div class="overlay"></div>
-      <div class="content">
-        <h1>🎾 LỜI MỜI THAM GIA CLB TENNIS</h1>
-        <p class="subtitle">Kết nối - Rèn luyện - Đam mê</p>
-      </div>
+    <header>
+        <nav>
+            <div class="logo">⚛️ Vật Lý 12</div>
+            <ul class="nav-links">
+                <li><a href="#home">Trang chủ</a></li>
+                <li><a href="#topics">Chủ đề</a></li>
+                <li><a href="#experiments">Thí nghiệm</a></li>
+                <li><a href="#contact">Liên hệ</a></li>
+            </ul>
+        </nav>
     </header>
 
-    <main class="invitation">
-      <h2>Thân mời bạn đến tham dự buổi ra mắt CLB Tennis Thành phố!</h2>
-      <p><b>⏰ Thời gian:</b> 8h sáng, Chủ nhật - 10/11/2025</p>
-      <p><b>📍 Địa điểm:</b> Sân Tennis Trung tâm Thể thao Phú Thọ</p>
-      <p class="message">Hãy cùng nhau rèn luyện sức khỏe, kết nối bạn bè và lan tỏa niềm đam mê tennis!</p>
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Khám Phá Vật Lý Lớp 12</h1>
+            <p>Trải nghiệm thí nghiệm tương tác trực tiếp trên trình duyệt</p>
+            <a href="#experiments" class="cta-button">Thực Hành Ngay</a>
+        </div>
+    </section>
 
-      <a href="https://forms.gle/..." target="_blank" class="btn">Đăng ký tham gia</a>
-    </main>
+    <section class="section" id="topics">
+        <h2 class="section-title">Chủ Đề Chính</h2>
+        <div class="topics-grid">
+            <div class="topic-card">
+                <div class="topic-icon">🌊</div>
+                <h3>Dao Động Cơ</h3>
+                <p>Tìm hiểu về dao động điều hòa, con lắc đơn, con lắc lò xo và các hiện tượng cộng hưởng trong tự nhiên.</p>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">📡</div>
+                <h3>Sóng Cơ & Âm</h3>
+                <p>Khám phá bản chất của sóng, sự truyền âm, giao thoa sóng và các ứng dụng trong đời sống.</p>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">⚡</div>
+                <h3>Điện Xoay Chiều</h3>
+                <p>Nghiên cứu dòng điện xoay chiều, mạch RLC, máy biến áp và hệ thống truyền tải điện năng.</p>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">💡</div>
+                <h3>Dao Động Điện Từ</h3>
+                <p>Tìm hiểu về dao động trong mạch LC, sóng điện từ và các ứng dụng trong viễn thông.</p>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">🌈</div>
+                <h3>Quang Học</h3>
+                <p>Nghiên cứu về ánh sáng, tán sắc, giao thoa, nhiễu xạ và các hiện tượng quang học đặc biệt.</p>
+            </div>
+            <div class="topic-card">
+                <div class="topic-icon">☢️</div>
+                <h3>Vật Lý Hạt Nhân</h3>
+                <p>Khám phá cấu trúc hạt nhân, phóng xạ, phản ứng hạt nhân và năng lượng nguyên tử.</p>
+            </div>
+        </div>
+    </section>
 
-    <footer>
-      <p>© 2025 CLB Tennis Thành phố · Designed with 💚 by ChatGPT</p>
+    <section class="section" id="experiments">
+        <div class="experiments">
+            <h2 class="section-title">Thí Nghiệm Tương Tác</h2>
+            <div class="experiment-grid">
+                <!-- Thí nghiệm 1: Dao động điều hòa -->
+                <div class="experiment-card">
+                    <canvas id="pendulumCanvas" class="experiment-canvas"></canvas>
+                    <div class="experiment-controls">
+                        <h4>🎯 Con Lắc Đơn</h4>
+                        <div class="control-group">
+                            <label>Chiều dài (L): <span class="value-display" id="lengthValue">1.0m</span></label>
+                            <input type="range" id="lengthSlider" min="50" max="200" value="100">
+                        </div>
+                        <div class="control-group">
+                            <label>Góc ban đầu: <span class="value-display" id="angleValue">30°</span></label>
+                            <input type="range" id="angleSlider" min="10" max="60" value="30">
+                        </div>
+                        <button class="btn-control" id="startPendulum">Bắt đầu</button>
+                        <button class="btn-control" id="resetPendulum">Đặt lại</button>
+                    </div>
+                </div>
+
+                <!-- Thí nghiệm 2: Sóng cơ -->
+                <div class="experiment-card">
+                    <canvas id="waveCanvas" class="experiment-canvas"></canvas>
+                    <div class="experiment-controls">
+                        <h4>🌊 Sóng Cơ</h4>
+                        <div class="control-group">
+                            <label>Tần số (f): <span class="value-display" id="freqValue">2 Hz</span></label>
+                            <input type="range" id="freqSlider" min="1" max="10" value="2">
+                        </div>
+                        <div class="control-group">
+                            <label>Biên độ (A): <span class="value-display" id="ampValue">30</span></label>
+                            <input type="range" id="ampSlider" min="10" max="60" value="30">
+                        </div>
+                        <button class="btn-control" id="startWave">Bắt đầu</button>
+                        <button class="btn-control" id="stopWave">Dừng</button>
+                    </div>
+                </div>
+
+                <!-- Thí nghiệm 3: Giao thoa sóng -->
+                <div class="experiment-card">
+                    <canvas id="interferenceCanvas" class="experiment-canvas"></canvas>
+                    <div class="experiment-controls">
+                        <h4>⚡ Giao Thoa Sóng</h4>
+                        <div class="control-group">
+                            <label>Bước sóng (λ): <span class="value-display" id="wavelengthValue">40</span></label>
+                            <input type="range" id="wavelengthSlider" min="20" max="80" value="40">
+                        </div>
+                        <div class="control-group">
+                            <label>Khoảng cách nguồn: <span class="value-display" id="distanceValue">100</span></label>
+                            <input type="range" id="distanceSlider" min="50" max="200" value="100">
+                        </div>
+                        <button class="btn-control" id="startInterference">Bắt đầu</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <p>&copy; 2025 Vật Lý 12 - Thí Nghiệm Tương Tác. Mọi quyền được bảo lưu.</p>
+        <p style="margin-top: 10px;">Liên hệ: physics12@education.vn</p>
     </footer>
-  </div>
+
+    <script>
+        // Đảm bảo tất cả canvas được setup sau khi DOM load
+        window.addEventListener('load', function() {
+            // Thí nghiệm 1: Con lắc đơn
+            const pendulumCanvas = document.getElementById('pendulumCanvas');
+            const pendulumCtx = pendulumCanvas.getContext('2d');
+            
+            function resizePendulumCanvas() {
+                pendulumCanvas.width = pendulumCanvas.offsetWidth;
+                pendulumCanvas.height = 300;
+            }
+            resizePendulumCanvas();
+
+            let pendulumRunning = false;
+            let pendulumAngle = Math.PI / 6;
+            let pendulumAngularVelocity = 0;
+            let pendulumLength = 100;
+            let pendulumMaxAngle = 30;
+
+            document.getElementById('lengthSlider').addEventListener('input', (e) => {
+                pendulumLength = parseFloat(e.target.value);
+                document.getElementById('lengthValue').textContent = (pendulumLength / 100).toFixed(1) + 'm';
+            });
+
+            document.getElementById('angleSlider').addEventListener('input', (e) => {
+                pendulumMaxAngle = parseFloat(e.target.value);
+                document.getElementById('angleValue').textContent = pendulumMaxAngle + '°';
+                if (!pendulumRunning) {
+                    pendulumAngle = (pendulumMaxAngle * Math.PI) / 180;
+                }
+            });
+
+            document.getElementById('startPendulum').addEventListener('click', () => {
+                pendulumRunning = true;
+                pendulumAngle = (pendulumMaxAngle * Math.PI) / 180;
+                pendulumAngularVelocity = 0;
+            });
+
+            document.getElementById('resetPendulum').addEventListener('click', () => {
+                pendulumRunning = false;
+                pendulumAngle = (pendulumMaxAngle * Math.PI) / 180;
+                pendulumAngularVelocity = 0;
+            });
+
+            function drawPendulum() {
+                const centerX = pendulumCanvas.width / 2;
+                const centerY = 50;
+                const bobX = centerX + pendulumLength * Math.sin(pendulumAngle);
+                const bobY = centerY + pendulumLength * Math.cos(pendulumAngle);
+
+                pendulumCtx.clearRect(0, 0, pendulumCanvas.width, pendulumCanvas.height);
+                
+                // Vẽ giá đỡ
+                pendulumCtx.strokeStyle = '#333';
+                pendulumCtx.lineWidth = 3;
+                pendulumCtx.beginPath();
+                pendulumCtx.moveTo(centerX - 40, centerY);
+                pendulumCtx.lineTo(centerX + 40, centerY);
+                pendulumCtx.stroke();
+
+                // Vẽ dây
+                pendulumCtx.strokeStyle = '#667eea';
+                pendulumCtx.lineWidth = 2;
+                pendulumCtx.beginPath();
+                pendulumCtx.moveTo(centerX, centerY);
+                pendulumCtx.lineTo(bobX, bobY);
+                pendulumCtx.stroke();
+
+                // Vẽ quả cầu
+                pendulumCtx.fillStyle = '#764ba2';
+                pendulumCtx.beginPath();
+                pendulumCtx.arc(bobX, bobY, 15, 0, Math.PI * 2);
+                pendulumCtx.fill();
+
+                if (pendulumRunning) {
+                    const g = 9.8;
+                    const L = pendulumLength / 100;
+                    const angularAcceleration = -(g / L) * Math.sin(pendulumAngle);
+                    pendulumAngularVelocity += angularAcceleration * 0.016;
+                    pendulumAngle += pendulumAngularVelocity * 0.016;
+                    pendulumAngularVelocity *= 0.9995;
+                }
+
+                requestAnimationFrame(drawPendulum);
+            }
+
+            drawPendulum();
+
+            // Thí nghiệm 2: Sóng cơ
+            const waveCanvas = document.getElementById('waveCanvas');
+            const waveCtx = waveCanvas.getContext('2d');
+            
+            function resizeWaveCanvas() {
+                waveCanvas.width = waveCanvas.offsetWidth;
+                waveCanvas.height = 300;
+            }
+            resizeWaveCanvas();
+
+            let waveRunning = false;
+            let waveTime = 0;
+            let waveFreq = 2;
+            let waveAmp = 30;
+
+            document.getElementById('freqSlider').addEventListener('input', (e) => {
+                waveFreq = parseFloat(e.target.value);
+                document.getElementById('freqValue').textContent = waveFreq + ' Hz';
+            });
+
+            document.getElementById('ampSlider').addEventListener('input', (e) => {
+                waveAmp = parseFloat(e.target.value);
+                document.getElementById('ampValue').textContent = waveAmp;
+            });
+
+            document.getElementById('startWave').addEventListener('click', () => {
+                waveRunning = true;
+            });
+
+            document.getElementById('stopWave').addEventListener('click', () => {
+                waveRunning = false;
+            });
+
+            function drawWave() {
+                waveCtx.clearRect(0, 0, waveCanvas.width, waveCanvas.height);
+                
+                const centerY = waveCanvas.height / 2;
+                
+                // Vẽ trục
+                waveCtx.strokeStyle = '#ccc';
+                waveCtx.lineWidth = 1;
+                waveCtx.beginPath();
+                waveCtx.moveTo(0, centerY);
+                waveCtx.lineTo(waveCanvas.width, centerY);
+                waveCtx.stroke();
+
+                // Vẽ sóng
+                waveCtx.strokeStyle = '#667eea';
+                waveCtx.lineWidth = 3;
+                waveCtx.beginPath();
+                
+                for (let x = 0; x < waveCanvas.width; x++) {
+                    const y = centerY + waveAmp * Math.sin((x * 0.02) - waveTime * waveFreq * 0.05);
+                    if (x === 0) {
+                        waveCtx.moveTo(x, y);
+                    } else {
+                        waveCtx.lineTo(x, y);
+                    }
+                }
+                
+                waveCtx.stroke();
+
+                if (waveRunning) {
+                    waveTime += 1;
+                }
+
+                requestAnimationFrame(drawWave);
+            }
+
+            drawWave();
+
+            // Thí nghiệm 3: Giao thoa sóng
+            const intCanvas = document.getElementById('interferenceCanvas');
+            const intCtx = intCanvas.getContext('2d');
+            
+            function resizeIntCanvas() {
+                intCanvas.width = intCanvas.offsetWidth;
+                intCanvas.height = 300;
+            }
+            resizeIntCanvas();
+
+            let intRunning = false;
+            let intTime = 0;
+            let wavelength = 40;
+            let sourceDistance = 100;
+
+            document.getElementById('wavelengthSlider').addEventListener('input', (e) => {
+                wavelength = parseFloat(e.target.value);
+                document.getElementById('wavelengthValue').textContent = wavelength;
+            });
+
+            document.getElementById('distanceSlider').addEventListener('input', (e) => {
+                sourceDistance = parseFloat(e.target.value);
+                document.getElementById('distanceValue').textContent = sourceDistance;
+            });
+
+            document.getElementById('startInterference').addEventListener('click', () => {
+                intRunning = !intRunning;
+                document.getElementById('startInterference').textContent = intRunning ? 'Dừng' : 'Bắt đầu';
+            });
+
+            function drawInterference() {
+                intCtx.clearRect(0, 0, intCanvas.width, intCanvas.height);
+                
+                const centerY = intCanvas.height / 2;
+                const source1X = intCanvas.width / 2 - sourceDistance / 2;
+                const source2X = intCanvas.width / 2 + sourceDistance / 2;
+
+                // Vẽ sóng từ nguồn 1
+                for (let r = 10; r < 250; r += wavelength / 2) {
+                    const alpha = Math.max(0, 1 - r / 250);
+                    intCtx.strokeStyle = `rgba(102, 126, 234, ${alpha * 0.6})`;
+                    intCtx.lineWidth = 2;
+                    intCtx.beginPath();
+                    const radius = r + (intTime * 1) % wavelength;
+                    intCtx.arc(source1X, centerY, radius, 0, Math.PI * 2);
+                    intCtx.stroke();
+                }
+
+                // Vẽ sóng từ nguồn 2
+                for (let r = 10; r < 250; r += wavelength / 2) {
+                    const alpha = Math.max(0, 1 - r / 250);
+                    intCtx.strokeStyle = `rgba(118, 75, 162, ${alpha * 0.6})`;
+                    intCtx.lineWidth = 2;
+                    intCtx.beginPath();
+                    const radius = r + (intTime * 1) % wavelength;
+                    intCtx.arc(source2X, centerY, radius, 0, Math.PI * 2);
+                    intCtx.stroke();
+                }
+
+                // Vẽ các nguồn sóng
+                intCtx.fillStyle = '#764ba2';
+                intCtx.beginPath();
+                intCtx.arc(source1X, centerY, 8, 0, Math.PI * 2);
+                intCtx.fill();
+                intCtx.beginPath();
+                intCtx.arc(source2X, centerY, 8, 0, Math.PI * 2);
+                intCtx.fill();
+
+                if (intRunning) {
+                    intTime += 1;
+                }
+
+                requestAnimationFrame(drawInterference);
+            }
+
+            drawInterference();
+
+            // Xử lý resize
+            window.addEventListener('resize', () => {
+                resizePendulumCanvas();
+                resizeWaveCanvas();
+                resizeIntCanvas();
+            });
+        });
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
 </body>
 </html>
