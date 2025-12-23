@@ -4,208 +4,213 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vật Lí 12 - Kết Nối Tri Thức</title>
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$']],
+                displayMath: [['$$', '$$']],
+                processEscapes: true
+            }
+        };
+    </script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     
     <style>
         :root {
-            --primary-color: #0056b3;
-            --secondary-color: #f8f9fa;
-            --accent-color: #e67e22;
-            --text-color: #2c3e50;
+            --primary: #1a73e8;
+            --secondary: #f1f3f4;
+            --accent: #d93025;
+            --text: #202124;
         }
         
         body {
-            font-family: 'Segoe UI', Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0; padding: 0;
-            line-height: 1.6;
-            color: var(--text-color);
-            background-color: #f4f7f6;
+            line-height: 1.7;
+            color: var(--text);
+            background-color: #f8f9fa;
         }
 
         header {
-            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            background: linear-gradient(135deg, #1565c0, #003c8f);
             color: white;
-            padding: 3rem 0;
+            padding: 3rem 1rem;
             text-align: center;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
 
         nav {
-            background: #222;
+            background: #ffffff;
             padding: 1rem;
             position: sticky;
             top: 0;
             z-index: 1000;
             text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
         nav a {
-            color: #ddd;
+            color: var(--primary);
             text-decoration: none;
-            padding: 10px 15px;
-            font-weight: 600;
-            transition: 0.3s;
+            padding: 8px 16px;
+            font-weight: bold;
+            margin: 0 5px;
+            border-radius: 4px;
         }
 
-        nav a:hover { color: #fff; background: var(--primary-color); border-radius: 5px; }
+        nav a:hover { background: var(--secondary); }
 
-        .container { max-width: 1200px; margin: auto; padding: 20px; }
+        .container { max-width: 1200px; margin: 20px auto; padding: 0 20px; }
 
         section {
             background: white;
             margin-bottom: 40px;
             padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border-radius: 16px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
 
         h2 {
-            color: var(--primary-color);
-            border-left: 6px solid var(--accent-color);
-            padding-left: 15px;
-            text-transform: uppercase;
+            color: var(--primary);
+            border-bottom: 3px solid var(--primary);
+            display: inline-block;
+            margin-bottom: 25px;
         }
 
         .content-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 25px;
-            margin-top: 20px;
+            grid-template-columns: 380px 1fr;
+            gap: 30px;
         }
 
-        @media (max-width: 900px) { .content-grid { grid-template-columns: 1fr; } }
+        @media (max-width: 1000px) { .content-grid { grid-template-columns: 1fr; } }
 
-        .theory-box { background: var(--secondary-color); padding: 20px; border-radius: 10px; }
-        
-        .experiment-container {
-            background: #fff;
-            border: 2px solid #ddd;
-            border-radius: 10px;
-            overflow: hidden;
-            position: relative;
+        .theory-panel {
+            background: #fdfdfd;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid #eee;
         }
 
-        iframe { width: 100%; height: 450px; border: none; }
+        .formula-card {
+            background: #fff5f5;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 1.3rem;
+            color: #b71c1c;
+            border: 1px dashed #ef9a9a;
+        }
 
-        .exp-label {
-            background: var(--accent-color);
+        iframe {
+            width: 100%;
+            height: 500px;
+            border: none;
+            border-radius: 12px;
+            background: #eee;
+        }
+
+        footer {
+            background: #202124;
             color: white;
-            padding: 5px 15px;
-            font-weight: bold;
-            display: inline-block;
-            border-radius: 0 0 10px 0;
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 50px;
         }
-
-        footer { background: #222; color: white; text-align: center; padding: 30px; margin-top: 40px; }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>VẬT LÍ 12</h1>
-    <p>Sách Kết Nối Tri Thức Với Cuộc Sống - Hệ thống bài học & Thí nghiệm ảo</p>
+    <h1>VẬT LÍ 12 - KẾT NỐI TRI THỨC</h1>
+    <p>Khám phá lý thuyết và thí nghiệm ảo tương tác</p>
 </header>
 
 <nav>
-    <a href="#nhiet">VẬT LÍ NHIỆT</a>
-    <a href="#khi">KHÍ LÍ TƯỞNG</a>
-    <a href="#tutruong">TỪ TRƯỜNG</a>
-    <a href="#hatnhan">VẬT LÍ HẠT NHÂN</a>
+    <a href="#chuong1">Vật Lí Nhiệt</a>
+    <a href="#chuong2">Khí Lí Tưởng</a>
+    <a href="#chuong3">Từ Trường</a>
+    <a href="#chuong4">Hạt Nhân</a>
 </nav>
 
 <div class="container">
 
-    <section id="nhiet">
+    <section id="chuong1">
         <h2>Chương I: Vật Lí Nhiệt</h2>
         <div class="content-grid">
-            <div class="theory-box">
-                <h3>Nội dung chính</h3>
-                <ul>
-                    <li>Mô hình động học phân tử chất khí.</li>
-                    <li>Định luật 1 nhiệt động lực học: $\Delta U = A + Q$.</li>
-                    <li>Sự chuyển thể của các chất.</li>
-                </ul>
-                <p><em>Mẹo: Chú ý sự thay đổi động năng phân tử khi tăng nhiệt độ.</em></p>
+            <div class="theory-panel">
+                <h3>Lý thuyết cơ bản</h3>
+                <p>Nội năng và định luật I nhiệt động lực học:</p>
+                <div class="formula-card">$$\Delta U = A + Q$$</div>
+                <p>Nhiệt dung riêng và sự chuyển thể:</p>
+                <div class="formula-card">$$Q = m \cdot c \cdot \Delta t$$</div>
+                
+
+[Image of molecular arrangement in solids, liquids, and gases]
+
             </div>
-            <div class="experiment-container">
-                <div class="exp-label">Mô phỏng: Các thể của vật chất</div>
-                <iframe src="https://phet.colorado.edu/sims/html/states-of-matter-basics/latest/states-of-matter-basics_vi.html" allowfullscreen></iframe>
-            </div>
+            <iframe src="https://phet.colorado.edu/sims/html/states-of-matter-basics/latest/states-of-matter-basics_vi.html"></iframe>
         </div>
     </section>
 
-    <section id="khi">
+    <section id="chuong2">
         <h2>Chương II: Khí Lí Tưởng</h2>
         <div class="content-grid">
-            <div class="theory-box">
-                <h3>Nội dung chính</h3>
-                <ul>
-                    <li>Phương trình trạng thái: $pV = nRT$.</li>
-                    <li>Các đẳng quá trình: Đẳng nhiệt, đẳng tích, đẳng áp.</li>
-                    <li>Mối liên hệ giữa áp suất và động năng phân tử.</li>
-                </ul>
+            <div class="theory-panel">
+                <h3>Phương trình trạng thái</h3>
+                <p>Mối quan hệ giữa $p, V, T$ của một lượng khí:</p>
+                <div class="formula-card">$$p \cdot V = n \cdot R \cdot T$$</div>
+                <p>Định luật Boyle (Đẳng nhiệt):</p>
+                <div class="formula-card">$$p_1 V_1 = p_2 V_2$$</div>
                 
 
-[Image of an ideal gas p-V diagram]
+[Image of pressure-volume graph for an ideal gas]
 
             </div>
-            <div class="experiment-container">
-                <div class="exp-label">Mô phỏng: Thuộc tính chất khí</div>
-                <iframe src="https://phet.colorado.edu/sims/html/gas-properties/latest/gas-properties_vi.html" allowfullscreen></iframe>
-            </div>
+            <iframe src="https://phet.colorado.edu/sims/html/gas-properties/latest/gas-properties_vi.html"></iframe>
         </div>
     </section>
 
-    <section id="tutruong">
+    <section id="chuong3">
         <h2>Chương III: Từ Trường</h2>
         <div class="content-grid">
-            <div class="theory-box">
-                <h3>Nội dung chính</h3>
-                <ul>
-                    <li>Cảm ứng từ $B$ và đơn vị Tesla ($T$).</li>
-                    <li>Lực từ tác dụng lên đoạn dây dẫn: $F = BIl\sin\alpha$.</li>
-                    <li>Từ trường của dòng điện chạy trong các dây dẫn có hình dạng đặc biệt.</li>
-                </ul>
+            <div class="theory-panel">
+                <h3>Lực Từ & Cảm Ứng Từ</h3>
+                <p>Lực từ tác dụng lên dây dẫn thẳng:</p>
+                <div class="formula-card">$$F = B \cdot I \cdot L \cdot \sin \alpha$$</div>
+                <p>Từ trường của dòng điện tròn tại tâm:</p>
+                <div class="formula-card">$$B = 2\pi \cdot 10^{-7} \frac{N \cdot I}{R}$$</div>
                 
 
-[Image of magnetic field lines around a bar magnet]
+[Image of magnetic field lines around a straight current-carrying wire]
 
             </div>
-            <div class="experiment-container">
-                <div class="exp-label">Mô phỏng: Nam châm & La bàn</div>
-                <iframe src="https://phet.colorado.edu/sims/html/magnet-and-compass/latest/magnet-and-compass_vi.html" allowfullscreen></iframe>
-            </div>
+            <iframe src="https://phet.colorado.edu/sims/html/magnet-and-compass/latest/magnet-and-compass_vi.html"></iframe>
         </div>
     </section>
 
-    <section id="hatnhan">
+    <section id="chuong4">
         <h2>Chương IV: Vật Lí Hạt Nhân</h2>
         <div class="content-grid">
-            <div class="theory-box">
-                <h3>Nội dung chính</h3>
-                <ul>
-                    <li>Cấu tạo hạt nhân: $Z$ Proton và $(A-Z)$ Neutron.</li>
-                    <li>Năng lượng liên kết và độ hụt khối: $E = \Delta m \cdot c^2$.</li>
-                    <li>Phóng xạ, Phân hạch và Nhiệt hạch.</li>
-                </ul>
+            <div class="theory-panel">
+                <h3>Năng Lượng & Phóng Xạ</h3>
+                <p>Năng lượng nghỉ của hạt nhân:</p>
+                <div class="formula-card">$$E = m \cdot c^2$$</div>
+                <p>Định luật phân rã phóng xạ:</p>
+                <div class="formula-card">$$N = N_0 \cdot 2^{-\frac{t}{T}}$$</div>
                 
-
-[Image of nuclear fission reaction diagram]
-
             </div>
-            <div class="experiment-container">
-                <div class="exp-label">Mô phỏng: Phân hạch hạt nhân</div>
-                <iframe src="https://phet.colorado.edu/sims/html/nuclear-fission/latest/nuclear-fission_vi.html" allowfullscreen></iframe>
-            </div>
+            <iframe src="https://phet.colorado.edu/sims/html/radiometric-dating/latest/radiometric-dating_vi.html"></iframe>
         </div>
     </section>
 
 </div>
 
 <footer>
-    <p><strong>Dự án Website học tập Vật Lí 12</strong></p>
-    <p>Học liệu dựa trên chương trình GDPT 2018 - Bộ sách Kết nối tri thức</p>
+    <p><strong>Website hỗ trợ học tập Vật Lí 12</strong></p>
+    <p>Dữ liệu dựa trên chương trình GDPT 2018 - Kết nối tri thức với cuộc sống</p>
 </footer>
 
 </body>
